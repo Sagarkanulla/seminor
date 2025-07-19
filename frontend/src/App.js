@@ -53,6 +53,8 @@ const WelcomePage = () => {
     e.preventDefault();
     if (!createForm.name || !createForm.creator_name) return;
     
+    alert("Creating room with: " + JSON.stringify(createForm));
+    
     setLoading(true);
     try {
       console.log("Creating room with data:", createForm);
@@ -76,10 +78,12 @@ const WelcomePage = () => {
           role: createForm.creator_role
         });
         setCurrentRoom(room);
+        
+        alert("Room created successfully: " + room.room_id);
       }
     } catch (error) {
       console.error("Failed to create room:", error);
-      alert("Failed to create room. Please try again.");
+      alert("Failed to create room: " + error.message);
     }
     setLoading(false);
   };
