@@ -152,7 +152,7 @@ async def join_room(request: JoinRoomRequest):
             "room_id": request.room_id,
             "password": request.password,
             "is_active": True
-        })
+        }, {"_id": 0})
         
         if not room:
             raise HTTPException(status_code=404, detail="Room not found or invalid credentials")
