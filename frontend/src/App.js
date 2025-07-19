@@ -51,24 +51,40 @@ const WelcomePage = () => {
 
   const handleCreateRoom = async (e) => {
     e.preventDefault();
-    if (!createForm.name || !createForm.creator_name) return;
+    console.log("Create room function called!");
+    console.log("Form data:", createForm);
+    
+    if (!createForm.name || !createForm.creator_name) {
+      console.log("Form validation failed");
+      return;
+    }
     
     setLoading(true);
     try {
+      console.log("Making API request to:", `${API}/rooms/create`);
       const response = await axios.post(`${API}/rooms/create`, createForm);
+      console.log("API response:", response.data);
       
       if (response.data.success) {
         const { room } = response.data;
+        console.log("Room created successfully:", room);
         
-        setUser({
+        const userData = {
           user_id: room.creator_id,
           user_name: room.creator_name,
           role: createForm.creator_role
-        });
+        };
+        console.log("Setting user:", userData);
+        console.log("Setting room:", room);
+        
+        setUser(userData);
         setCurrentRoom(room);
+      } else {
+        console.log("API returned success=false");
       }
     } catch (error) {
       console.error("Failed to create room:", error);
+      console.error("Error details:", error.response?.data);
       alert("Failed to create room. Please try again.");
     }
     setLoading(false);
