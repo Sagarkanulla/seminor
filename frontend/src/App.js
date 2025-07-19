@@ -19,10 +19,10 @@ function App() {
           <WelcomePage />
         ) : !currentRoom ? (
           <RoomSelectionPage />
-        ) : !currentRoom.active ? (
-          <RoomSelectionPage />
-        ) : (
+        ) : currentRoom.active ? (
           <ChatRoom />
+        ) : (
+          <RoomSelectionPage />
         )}
       </div>
     </UserContext.Provider>
