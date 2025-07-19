@@ -236,7 +236,7 @@ async def send_message(request: SendMessageRequest):
 async def delete_message(message_id: str, user_id: str):
     try:
         # Check if user is faculty
-        user = await db.users.find_one({"id": user_id})
+        user = await db.users.find_one({"id": user_id}, {"_id": 0})
         if not user or user["role"] != "faculty":
             raise HTTPException(status_code=403, detail="Only faculty can delete messages")
         
