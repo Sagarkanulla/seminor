@@ -19,6 +19,8 @@ function App() {
           <WelcomePage />
         ) : !currentRoom ? (
           <RoomSelectionPage />
+        ) : !currentRoom.active ? (
+          <RoomSelectionPage />
         ) : (
           <ChatRoom />
         )}
