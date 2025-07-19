@@ -319,7 +319,7 @@ const ChatRoom = () => {
         wsRef.current.close();
       }
     };
-  }, []);
+  }, [currentRoom]);
 
   const loadMessages = async () => {
     try {
@@ -333,18 +333,35 @@ const ChatRoom = () => {
   };
 
   const setupWebSocket = () => {
+    if (wsRef.current) {
+      wsRef.current.close();
+    }
+    
     const wsUrl = BACKEND_URL.replace('https://', 'wss://').replace('http://', 'ws://');
     wsRef.current = new WebSocket(`${wsUrl}/ws/${currentRoom.room_id}`);
+    
+    wsRef.current.onopen = () => {
+      console.log("WebSocket connected");
+    };
     
     wsRef.current.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.type === "new_message") {
-        setMessages(prev => [...prev, data.message]);
+        setMessages(prev => {
+          // Avoid duplicate messages
+          const exists = prev.find(msg => msg.id === data.message.id);
+          if (exists) return prev;
+          return [...prev, data.message];
+        });
       }
     };
 
     wsRef.current.onerror = (error) => {
       console.error("WebSocket error:", error);
+    };
+
+    wsRef.current.onclose = () => {
+      console.log("WebSocket closed");
     };
   };
 
