@@ -36,38 +36,53 @@
   }
 }
 
-/* Custom scrollbar styles */
-::-webkit-scrollbar {
+/* Custom scrollbar styles for chat */
+.overflow-y-auto::-webkit-scrollbar {
   width: 6px;
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
   border-radius: 3px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
-/* Animation for messages */
-@keyframes slideIn {
+/* Message animations */
+@keyframes slideInFromRight {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateX(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
-.message-enter {
-  animation: slideIn 0.3s ease-out;
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.message-mine {
+  animation: slideInFromRight 0.3s ease-out;
+}
+
+.message-other {
+  animation: slideInFromLeft 0.3s ease-out;
 }
 
 /* Focus styles */
@@ -92,4 +107,61 @@ button {
 
 .loading {
   animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* WhatsApp-style message bubbles */
+.message-bubble-mine {
+  position: relative;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+}
+
+.message-bubble-mine::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid #3b82f6;
+  border-bottom: 8px solid transparent;
+}
+
+.message-bubble-other {
+  position: relative;
+  background: white;
+  border: 1px solid #e5e7eb;
+}
+
+.message-bubble-other::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-right: 8px solid white;
+  border-bottom: 8px solid transparent;
+}
+
+/* File upload styles */
+.file-upload-area {
+  border: 2px dashed #d1d5db;
+  transition: all 0.3s ease;
+}
+
+.file-upload-area:hover {
+  border-color: #3b82f6;
+  background-color: #f8fafc;
+}
+
+.file-upload-area.dragover {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+}
+
+/* Chat background pattern */
+.chat-background {
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(156, 163, 175, 0.1) 1px, transparent 0);
+  background-size: 20px 20px;
 }
