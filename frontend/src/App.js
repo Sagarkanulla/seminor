@@ -55,9 +55,21 @@ const WelcomePage = () => {
     
     setLoading(true);
     try {
+      console.log("Creating room with data:", createForm);
       const response = await axios.post(`${API}/rooms/create`, createForm);
+      console.log("Room creation response:", response.data);
+      
       if (response.data.success) {
-        const { room, } = response.data;
+        const { room } = response.data;
+        console.log("Setting user and room:", {
+          user: {
+            user_id: room.creator_id,
+            user_name: room.creator_name,
+            role: createForm.creator_role
+          },
+          room: room
+        });
+        
         setUser({
           user_id: room.creator_id,
           user_name: room.creator_name,
