@@ -194,7 +194,7 @@ async def get_room_messages(room_id: str):
         messages = await db.messages.find({
             "room_id": room_id,
             "is_deleted": False
-        }).sort("timestamp", 1).to_list(1000)
+        }, {"_id": 0}).sort("timestamp", 1).to_list(1000)
         
         return {"success": True, "messages": messages}
     except Exception as e:
