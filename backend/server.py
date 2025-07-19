@@ -204,7 +204,7 @@ async def get_room_messages(room_id: str):
 async def send_message(request: SendMessageRequest):
     try:
         # Get user info
-        user = await db.users.find_one({"id": request.user_id})
+        user = await db.users.find_one({"id": request.user_id}, {"_id": 0})
         if not user:
             raise HTTPException(status_code=404, detail="User not found")
         
