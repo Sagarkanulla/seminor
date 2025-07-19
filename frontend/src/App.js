@@ -381,6 +381,10 @@ const ChatRoom = () => {
 
       if (response.data.success) {
         setNewMessage("");
+        // Fallback: reload messages if WebSocket doesn't work
+        setTimeout(() => {
+          loadMessages();
+        }, 500);
       }
     } catch (error) {
       console.error("Failed to send message:", error);
