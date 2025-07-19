@@ -294,7 +294,8 @@ async def test_websocket_connection(room_id):
         ws_url = f"{WS_BASE}/ws/{room_id}"
         print(f"Connecting to WebSocket: {ws_url}")
         
-        async with websockets.connect(ws_url, timeout=10) as websocket:
+        # Remove timeout parameter that's causing issues
+        async with websockets.connect(ws_url) as websocket:
             # Connection successful
             results.success("WebSocket Connection")
             
