@@ -32,7 +32,7 @@ function App() {
 // Welcome page component
 const WelcomePage = () => {
   const { setUser, setCurrentRoom } = React.useContext(UserContext);
-  const [activeTab, setActiveTab] = useState("join");
+  const [activeTab, setActiveTab] = useState("create");
   const [loading, setLoading] = useState(false);
 
   // Create Room Form
