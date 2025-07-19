@@ -53,24 +53,12 @@ const WelcomePage = () => {
     e.preventDefault();
     if (!createForm.name || !createForm.creator_name) return;
     
-    alert("Creating room with: " + JSON.stringify(createForm));
-    
     setLoading(true);
     try {
-      console.log("Creating room with data:", createForm);
       const response = await axios.post(`${API}/rooms/create`, createForm);
-      console.log("Room creation response:", response.data);
       
       if (response.data.success) {
         const { room } = response.data;
-        console.log("Setting user and room:", {
-          user: {
-            user_id: room.creator_id,
-            user_name: room.creator_name,
-            role: createForm.creator_role
-          },
-          room: room
-        });
         
         setUser({
           user_id: room.creator_id,
@@ -78,12 +66,10 @@ const WelcomePage = () => {
           role: createForm.creator_role
         });
         setCurrentRoom(room);
-        
-        alert("Room created successfully: " + room.room_id);
       }
     } catch (error) {
       console.error("Failed to create room:", error);
-      alert("Failed to create room: " + error.message);
+      alert("Failed to create room. Please try again.");
     }
     setLoading(false);
   };
