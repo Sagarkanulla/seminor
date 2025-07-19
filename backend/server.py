@@ -250,6 +250,8 @@ async def delete_message(message_id: str, user_id: str):
             raise HTTPException(status_code=404, detail="Message not found")
         
         return {"success": True, "message": "Message deleted"}
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
